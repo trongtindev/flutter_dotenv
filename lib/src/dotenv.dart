@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
@@ -60,7 +59,7 @@ class DotEnv {
   /// Loads environment variables from the env file into a map
   /// Merge with any entries defined in [mergeWith]
   Future<void> load(
-      {String fileName = '.env', Parser parser = const Parser(), Map<String, String> mergeWith = const {}}) async {
+      {String fileName = '.env',Parser parser = const Parser(),Map<String, String> mergeWith = const {}}) async {
     clean();
     final linesFromFile = await _getEntriesFromFile(fileName);
     final linesFromMergeWith = mergeWith.entries.map((entry) => "${entry.key}=${entry.value}").toList();
@@ -71,7 +70,9 @@ class DotEnv {
   }
 
   void testLoad(
-      {String fileInput = '', Parser parser = const Parser(), Map<String, String> mergeWith = const {}}) {
+      {String fileInput = '',
+      Parser parser = const Parser(),
+      Map<String, String> mergeWith = const {}}) {
     clean();
     final linesFromFile = fileInput.split('\n');
     final linesFromMergeWith = mergeWith.entries.map((entry) => "${entry.key}=${entry.value}").toList();
