@@ -8,6 +8,11 @@ Release notes are available on [github][notes].
 [pub-semver-readme]: https://pub.dartlang.org/packages/pub_semver
 [notes]: https://github.com/java-james/flutter_dotenv/releases
 
+# 5.1.0
+
+- [new] Add `isOptional` init param to prevent throwing if env file is not found
+- [new] variable name in error message
+
 # 5.0.1
 
 - [fix] Change `testLoad()` to be synchronous
