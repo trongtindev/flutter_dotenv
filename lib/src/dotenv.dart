@@ -56,6 +56,55 @@ class DotEnv {
     return value;
   }
 
+  /// Load the enviroment variable value as an [int]
+  ///
+  /// If variable with [name] does not exist then [fallback] will be used.
+  /// However if also no [fallback] is supplied an error will occur.
+  ///
+  /// Furthermore an [FormatException] will be thrown if the variable with [name]
+  /// exists but can not be parsed as an [int].
+  int getInt(String name, {int? fallback}) {
+    final value = maybeGet(name);
+    assert(value != null || fallback != null, 'A non-null fallback is required for missing entries');
+    return value != null ? int.parse(value) : fallback!;
+  }
+
+  /// Load the enviroment variable value as a [double]
+  ///
+  /// If variable with [name] does not exist then [fallback] will be used.
+  /// However if also no [fallback] is supplied an error will occur.
+  ///
+  /// Furthermore an [FormatException] will be thrown if the variable with [name]
+  /// exists but can not be parsed as a [double].
+  double getDouble(String name, {double? fallback}) {
+    final value = maybeGet(name);
+    assert(value != null || fallback != null, 'A non-null fallback is required for missing entries');
+    return value != null ? double.parse(value) : fallback!;
+  }
+
+  /// Load the enviroment variable value as a [bool]
+  ///
+  /// If variable with [name] does not exist then [fallback] will be used.
+  /// However if also no [fallback] is supplied an error will occur.
+  ///
+  /// Furthermore an [FormatException] will be thrown if the variable with [name]
+  /// exists but can not be parsed as a [bool].
+  bool getBool(String name, {bool? fallback}) {
+    final value = maybeGet(name);
+    assert(value != null || fallback != null, 'A non-null fallback is required for missing entries');
+    if (value != null) {
+      if (['true', '1'].contains(value.toLowerCase())) {
+        return true;
+      } else if (['false', '0'].contains(value.toLowerCase())) {
+        return false;
+      } else {
+        throw FormatException('Could not parse as a bool');
+      }
+    }
+
+    return fallback!;
+  }
+
   String? maybeGet(String name, {String? fallback}) => env[name] ?? fallback;
 
   /// Loads environment variables from the env file into a map
