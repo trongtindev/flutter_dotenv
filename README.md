@@ -30,6 +30,12 @@ This library parses that file and merges its values with the built-in
 
 [docs-io]: https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/dart:io.Platform#id_environment
 
+# Security Considerations
+
+Sensitive keys like API keys and tokens should not be stored in your Flutter app. They can be extracted even if obfuscated. This libary currently does not obfuscate variables as it may lull the consumers into a false sense of security. Use environment variables on the frontend application for non-sensitive configuration values, such as API endpoints and feature flags.
+
+For more details on mobile app security best practices, refer to the [OWASP Mobile Security Project.](https://owasp.org/www-project-mobile-top-10/)
+
 # Usage
 
 1. Create a `.env` file in the root of your project with the example content:
@@ -108,6 +114,20 @@ Optionally you could map `env` after load to a config model to access a config w
 
 Refer to the `test/dotenv_test.dart` file for a better idea of the behaviour of the `.env` parser.
 
+
+## Get with typing
+
+It's a common pattern to get an env variable then parse it as a type. You can get variables that are already typed by using the following functions:
+
+```dart
+  // someBool is a bool
+  final someBool = dotenv.getBool('VAR_NAME', fallback: true);
+  // someDouble is a double
+  final someDouble = dotenv.getDouble('VAR_NAME', fallback: .3);
+  // someInt is an int
+  final someInt = dotenv.getInt('VAR_NAME', fallback: 42);
+```
+
 ## Referencing
 
 You can reference variables defined above other within `.env`:
@@ -172,7 +192,6 @@ Future<void> main() async {
 }
 ```
 
-
 ## Usage with Platform Environment
 
 The Platform.environment map can be merged into the env:
@@ -188,6 +207,12 @@ Like other merged entries described above, `.env` entries can reference these me
 ```
   CLIENT_URL=https://$CLIENT_ID.dev.domain.com
 ```
+
+# Security Considerations
+
+### Never store sensitive keys in the frontend:
+
+Sensitive keys like API keys and tokens should not be stored in your Flutter app. They can be extracted even if obfuscated. This libary currently chooses not to ocfuscate the variables as it may lull the consumers into a false sense of security. Use environment variables for non-sensitive configuration values, such as API endpoints and feature flags. 
 
 # Discussion
 
